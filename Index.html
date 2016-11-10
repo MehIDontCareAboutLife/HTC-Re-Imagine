@@ -1,0 +1,1038 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<style>
+		body{
+			background-color:white;
+		}
+		#myCanvas{
+			border:black 1px solid;
+			background-color: black;
+			position: absolute;
+			top: 11%;
+			left:23%;
+		}
+		img{
+			display: none;
+		}
+		#canvas{
+			position: absolute;
+			width: 725px;
+			height: 450px;
+			top: 7%;
+			left: 23%;
+			background-color: black;
+		}
+		#textbox{
+			position: absolute;
+			width: 705px;
+			height: 100px;
+			top: 81%;
+			left: 23.6%;
+			border: 1px dashed grey;
+			background-color: black;
+		}
+		p{
+			color: white;
+			padding: 0% 5%;
+		}
+		
+		#head{
+			font-size: 1em;
+		}
+		
+		button{
+			display: none;
+			position: absolute;
+			left: 75%;
+			top: 60%;
+		}
+		
+		#a{
+			top: 30%;
+		}
+	</style>
+</head>
+<body onload="start()">
+	<div id="canvas"></div>
+	<div id="textbox">
+		<p id="head"></p>
+		<p id="text"></p>
+		<button id="a" onclick="a()">Accept</button>
+		<button id="b" onclick="b()">Decline</button>
+	</div>
+	<!--- canvas --->
+	<canvas id="myCanvas" width="725px" height="450px">
+	</canvas>
+	<img id = "A1" src = "area1.png" style = "display: none;"></img>
+	<img id = "A2" src = "area2.png" style = "display: none;"></img>
+	<img id = "A3" src = "area3.png" style = "display: none;"></img>
+	<img id = "D1" src = "D1.png" style = "display: none;"></img>
+	<img id = "D2" src = "D2.png" style = "display: none;"></img>
+	<img id = "DS" src = "DS.png" style = "display: none;"></img>
+	<img id = "U1" src = "U1.png" style = "display: none;"></img>
+	<img id = "U2" src = "U2.png" style = "display: none;"></img>
+	<img id = "US" src = "US.png" style = "display: none;"></img>
+	<img id = "R1" src = "R1.png" style = "display: none;"></img>
+	<img id = "R2" src = "R2.png" style = "display: none;"></img>
+	<img id = "RS" src = "RS.png" style = "display: none;"></img>
+	<img id = "L1" src = "L1.png" style = "display: none;"></img>
+	<img id = "L2" src = "L2.png" style = "display: none;"></img>
+	<img id = "LS" src = "LS.png" style = "display: none;"></img>
+	<img id = "DW" src = "DW.png" style = "display: none;"></img>
+	<script>
+		var Cx = 190;
+		var Cy = 10;
+		var y1 = document.getElementById("myCanvas");
+		var x1 = y1.getContext("2d");
+		var map = document.getElementById("A1");
+		var mc = document.getElementById("DS");
+		var dw = document.getElementById("DW");
+		var m = 1;
+		var i = 0;
+		var speed = 10;
+		function start(){
+			x1.drawImage(map, 0 , 0 , 725 , 450);
+			x1.drawImage(mc, Cx, Cy , 45, 70);
+		}
+		document.onkeyup = function myFunction(){
+			switch (event.keyCode) {
+				case 40:
+					mc = document.getElementById("DS");
+					break;
+				case 38:
+					mc = document.getElementById("US");
+					break;
+				case 37:
+					mc = document.getElementById("LS");
+					break;
+				case 39:
+					mc = document.getElementById("RS");
+					break;
+			}
+			x1.drawImage(map, 0 , 0 , 725 , 450);
+			x1.drawImage(mc, Cx , Cy , 45, 70);
+		}
+		document.onkeydown = function myFunction() {
+			
+			if(m == 1){
+				i++;
+				switch (event.keyCode) {
+					case 40:
+						if (Cy < 381 && !(Cx >180 && Cy >103 && Cy < 215) && !(Cy > 304 && Cx >574) && !(Cy > 304 && Cx < 490) && !(Cy > 218 && Cx < 60)){ 
+							Cy += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("D1");
+						} else{
+							mc = document.getElementById("D2");
+						} break;
+					case 38:
+						if (Cy > 0 && !(Cx > 241 && Cy < 43) && !(Cx < 154 && Cy < 43) && !(Cx > 180 && Cy >121 && Cy < 232)){ 
+							Cy -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("U1");
+						} else{
+							mc = document.getElementById("U2");
+						} break;
+					case 37:
+						if (Cx > 0 && !(Cx < 154 && Cy < 16) && !(Cy > 321 && Cx < 490) && !(Cy > 225 && Cx < 65)){
+							Cx -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("L1");
+						} else{
+							mc = document.getElementById("L2");
+						} break;
+					case 39:
+						if (Cx < 681 && !(Cx > 247 && Cy < 17) && !(Cx >= 180 && Cy > 121 && Cy < 215) && !(Cy > 304 && Cx >574) && !(Cx > 610 && Cy > 232 && Cy < 304)){
+							Cx += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("R1");
+						} else{
+							mc = document.getElementById("R2");
+						} break;
+					case 13:
+						alert (Cx + "x , y" + Cy);
+						break;
+					case 32:
+						if(Cx == 230 && Cy  == 230){
+							z=1;
+						}
+						else if (Cy > 218 && Cx < 65){
+							z=2;
+						}
+						else if((Cx > 610 && Cy > 232 && Cy < 304)){
+							z=3;
+						}
+						break;
+				}
+				if(Cx > 480 && Cx < 580 && Cy == 390){
+					m++;
+					map = document.getElementById("A2");
+					Cy = 0;
+				}
+			}
+			else if(m == 2){
+				i++;
+				switch (event.keyCode) {
+					case 40:
+						if (Cy < 361){ 
+							Cy += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("D1");
+						} else{
+							mc = document.getElementById("D2");
+						} break;
+					case 38:
+						if (Cy > 0){ 
+							Cy -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("U1");
+						} else{
+							mc = document.getElementById("U2");
+						}
+						if(Cx > 480 && Cx < 580 && Cy == 0){
+							m--;
+							map = document.getElementById("A1");
+							Cy = 390;
+						}
+						break;
+					case 37:
+						if (Cx > 0){
+							Cx -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("L1");
+						} else{
+							mc = document.getElementById("L2");
+						}
+						if(Cx == 0 && Cy > 229 && Cy < 321){
+							m++;
+							map = document.getElementById("A3");
+							Cx = 690;
+						}
+						break;
+					case 39:
+						if (Cx < 661){
+							Cx += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("R1");
+						} else{
+							mc = document.getElementById("R2");
+						} break;
+					case 13:
+						alert (Cx + "x , y" + Cy);
+						break;
+					case 32:
+						if (Cx == 130 && Cy == 350){
+							z = 5;
+						}else if (Cx == 270 && Cy == 80){
+							z = 6;
+						}
+						break;
+				}
+			}
+			else if(m == 3){
+				i++;
+				switch (event.keyCode) {
+					case 40:
+						if (Cy < 381){ 
+							Cy += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("D1");
+						} else{
+							mc = document.getElementById("D2");
+						} break;
+					case 38:
+						if (Cy > 0){ 
+							Cy -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("U1");
+						} else{
+							mc = document.getElementById("U2");
+						} break;
+					case 37:
+						if (Cx > 0){
+							Cx -= speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("L1");
+						} else{
+							mc = document.getElementById("L2");
+						} break;
+					case 39:
+						if (Cx < 681){
+							Cx += speed;
+						}
+						if(i%10 < 5){
+							mc = document.getElementById("R1");
+						} else{
+							mc = document.getElementById("R2");
+						}
+						if(Cx == 690 && Cy > 229 && Cy < 321){
+							m--;
+							map = document.getElementById("A2");
+							Cx = 0;
+						} break;
+					case 13:
+						alert (Cx + "x , y" + Cy);
+						break;
+					case 32:
+						if (Cx >= 590 && Cx <= 690 && Cy >= 280 && Cy <= 300){}
+						break;
+				}
+			}
+			x1.drawImage(map, 0 , 0 , 725 , 450);
+			x1.drawImage(mc, Cx , Cy , 45, 70);
+			if(event.keyCode==32){
+				x++;
+				start();
+			}
+		}
+		var 
+		/////////////////////////////////////////////////////////////////////script///////////////////////////////////////////////////////////////////////////////////////
+		/////////////////////////////////////////////////////////////////for Area 1//////////////////////////////////////////////////////////////
+		/////////////Beginning Dialogue/////////////////
+		J1=". . . . . . . . . . . . . . ",
+		J2="Urgh… Where am I? I should go look around and ask some people.",
+		//////////////////for Q1////////////////////////
+		Q1="Quest 1: Hungry Man",
+		///before accepting quest///
+		Q1_J1="Excuse me, can you tell me where I am?",
+		Q1_H1=" Please… food.",
+		Q1_R1="Find food for the Hungry Man?",
+		///after accepting quest///
+		//reply
+		Q1_J2="Alright, I’ll find you some food. I’ll be back", //accept
+		Q1_J3="...", //decline
+		//without food
+		Q1_H2="… Food…",
+		//with food
+		Q1_H3="Thank you… Here is a key to access the Coal Factory. Storm… destroyed my home.",
+		Q1_R2="You receive a key!",
+		Q1_J4="Jack: I’m sorry to hear that. Thank you.",
+		/////////////////for Q2////////////////////////
+		Q2="Quest 2: Deranged Man",
+		///before accepting quest///
+		Q2_J1="Excuse me, can you tell me where I am?",
+		Q2_D1="My… precious… my wheel. I… needs it…",
+		Q2_R1="Find wheel for Deranged Man?",
+		///after accepting quest///
+		//reply
+		Q2_J2="Jack: O… Okay then.", //accept
+		Q2_J3="… Alright then…", //decline
+		//without wheel
+		Q2_D2="Wheel… Wheel!",
+		Q2_R2="You flinch at his tone. You back away before you get hurt.",
+		//with wheel
+		Q2_D3="You brings me wheel… Elgar is satisfied. Here’s a pickaxe as my thanks.",
+		Q2_R3="You receive a pickaxe!",
+		Q2_J4="I… Okay? Thanks… I guess.",
+		Q2_R4="You walk away wondering what to do with the pickaxe.",
+		//////////////////for Q3////////////////////////
+		Q3="Quest 3: Blind Man",
+		///before accepting quest///
+		Q3_J1="Excuse me, can you tell me where I am?",
+		Q3_B1="Oh! Young man, can you find my walking stick? It was long and hard, and had a round head at one end. I’ll show you the way, later.",
+		Q3_R1="Find stick for Blind Man?",
+		///after accepting quest///
+		//reply
+		Q3_J2="Thank you, sir. I shall bring back your stick.", //accept
+		Q3_J3="I… I’ll think about it.", //decline
+		//without stick
+		Q3_B2="Have you found my stick yet?",
+		Q3_J4="Oh… sorry. I’ll go look for it.",
+		//with stick
+		Q3_B3="Thank you young man! I can walk again. You’re in the squatter area of Praesidium right now. Here… I found this axe. You can cut the tree that’s blocking the main road to the city.",
+		Q3_R2="You receive an axe!",
+		Q3_J5="Thank you for your kindness… But how did you see it? I thought you were…",
+		Q3_B4="Blind? Who said I’m blind, kiddo!",
+		Q3_R3="He laughs at your obliviousness.",
+		Q3_J6="I- I mean!",
+		Q3_B5="It’s okay kiddo. People always mistake me as blind. I just like to walk with my stick. Had it not been for it, I would have gotten blown away… Anyways. Go on your quest! I’m sure you’ll find your family, even if you don’t… well, don’t give up!",
+		/////////////////////////////////////////////////////////////////for Area 2//////////////////////////////////////////////////////////////
+		/////////////Beginning Dialogue/////////////////
+		A2_J1="Dang… this place looks really beat up. Typhoon must have been stronger than I thought.",
+		/////////////Woman gives food/////////////////
+		A2_I1="Quest Item: Food",
+		A2_S1="Here… take this food. Not like I’ll need it anymore.",
+		A2_J2="But…",
+		A2_S2="Take it… my sons are dead. Won’t need it anymore.",
+		A2_R1="The Woman insists and you’re forced to take it.",
+		A2_J3="Oh… Okay, thank you.",
+		A2_R2="You receive food!",
+		/////////////Random Kid scene/////////////////
+		A2_R3="Hint for Quest Item: Wheel",
+		A2_K1="Uh… I saw a weird round thing sticking out of the ground around here. I didn’t take it because I thought it was important.",
+		A2_I2="Quest Item: Wheel",
+		A2_R4="You found a Wheel on the ground!",
+		/////////////Other Interactable Stuff/////////////////
+		A2_R5="Huge Log Blocking Main Road: This huge tree is blocking the road! It’s too spiky for you to feasibly climb it! If only I had an axe… Cannot Proceed to Stage 2",
+		A2_R6="Tall Gate: There seems to be a lock blocking you from entering the Coal Factory. If only I had a key…",
+		/////////////////////////////////////////////////////////////////for Area 3//////////////////////////////////////////////////////////////
+		/////////////without pickaxe in inventory/////////////////
+		A3_C1="Eh? A walking stick you say? I… hrm, I think I saw one buried in those debris. If I had a pickaxe… yeah. I can probablly get it for you.",
+		A3_J1="Thanks. I’ll find one for you.",
+		/////////////with pickaxe in inventory/////////////////
+		A3_C2="Oh! Good, you have a pickaxe, I was wondering where I put that dang thing. You said you needed a stick eh? I can probably get it from one of the debris.",
+		/////////////Coal Worker mines out the debris and gives you the walking stick/////////////////
+		A3_C3="Well… Y’know what caused the storm?",
+		A3_J2="Huh. No, what is it?",
+		A3_C4="Y’see this factory here?",
+		A3_J3="Yeah?",
+		A3_C5="Well, it used to produce a huge amount of energy before. And… y’know what happens when you create that much energy with coal right?",
+		A3_J4="Huh. Yeah a whole lot of pollution in the air right?",
+		A3_C6="Yep! Carbon emission and all that stuff. Bad idea. I was just a wee worker back then. Turns out we messed things up really bad here.",
+		A3_J5="Wow. Mother Nature isn’t one to be taken lightly huh.",
+		A3_C7="Yup. Taste of our own medicine, *he snorts* Here, found the stick.",
+		A3_J6="Oh, thanks",
+		A3_R1="You receive the walking stick",
+		A3_C8="Oh hey, look it’s some person there.",
+		A3_R2="You notice a huge man in the entrance.",
+		A3_J7="Thank’s a lot.",
+		A3_C9="Don’t mention it kid.",
+		A3_R3="He turns toward the huge man",
+		A3_C10="Hey, lumberjack! Didn’t notice you there. How’d you get there?",
+		A3_L1="*groans* Got no clue either.",
+		A3_J8="Uh, sorry to interrupt sir. But there’s a huge log blocking the main road to the city… Can you help break the log?",
+		A3_L2="*grumbles* Sure, just gimme an axe. God knows where that darn axe went.",
+		A3_J9="Ah… okay. I’ll come back with the axe! (Where do we get an axe?)",
+		/////////////without axe in inventory/////////////////
+		A3_L3="Grr… Think I can break that darn log without an axe?!",
+		A3_R4="You back away",
+		A3_J10="I-I’m sorry!",
+		/////////////with axe in inventory/////////////////
+		A3_L4="Alright.",
+		A3_L5="There you go kid. Go, y’don’t need me anymore.",
+		A3_J11="Thank you so much!",
+		A3_L6="Don’t mention it kid.",
+		A3_R5="Lumberjack walks away.",
+		/////////////////////////////////////////////////////////////////now for the other variables////////////////////////////////////////////////////////////////////////////////////
+		axe=0, pickaxe=0, food=0, wheel=0, stick=0, key=0, x=0, z=0, a1=0, y=0;
+		
+		
+		function a(){
+			a1=1;
+			start();
+		}
+		
+		function b(){
+			a1=2;
+			start();
+		}
+		
+		function start(){
+			if(z==0 && y==0){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=J1;
+					
+					document.getElementById("a").style.display="none";
+					document.getElementById("b").style.display="none";
+				}
+				else if(x==1){
+					document.getElementById("text").innerHTML=J2;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					y=1;
+				}
+			}
+			else if(z==1){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").innerHTML=Q1_J1;
+					document.getElementById("text").style.display="block";
+				}
+				else if(x==1){
+					document.getElementById("head").innerHTML="HUNGRY GUY";
+					document.getElementById("text").innerHTML=Q1_H1;
+				}
+				else if(x==2){
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q1_J1;
+				}
+				else if(x==3){
+					document.getElementById("text").innerHTML=Q1_R1;
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").style.display="none";
+					
+					document.getElementById("a").style.display="block";
+					document.getElementById("b").style.display="block";
+					if(a1==1){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("head").style.display="block";
+						document.getElementById("head").innerHTML="JACK";
+						document.getElementById("text").innerHTML=Q1_J2;
+						document.getElementById("text").style.display="block";
+						x=3;
+					}
+					else if(a1==2){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("text").innerHTML=Q1_J3;
+						document.getElementById("head").innerHTML="JACK";
+						x=100;
+					}
+				}
+				else if(x==4){
+					if(food==0){
+						document.getElementById("text").innerHTML=Q1_H2;
+						document.getElementById("head").innerHTML="HUNGRY GUY";
+						x=100;
+					}
+					
+					else if(food==1){
+						document.getElementById("text").innerHTML=Q1_H3;
+						document.getElementById("head").innerHTML="HUNGRY GUY";
+						key = 1;
+					} 
+				}
+				else if(x==5){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q1_R2;
+				}
+				else if(x==6){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q1_J4;
+				} 
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+					a1=0;
+				}
+			}
+			else if(z==2){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q2_J1;
+					document.getElementById("text").style.display="block";
+				}
+				else if(x==1){
+					document.getElementById("head").innerHTML="DERANGED MAN";
+					document.getElementById("text").innerHTML=Q2_D1;
+				}
+				else if(x==2){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q2_R1;
+					
+					document.getElementById("a").style.display="block";
+					document.getElementById("b").style.display="block";
+					if(a1==1){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("head").style.display="block";
+						document.getElementById("head").innerHTML="JACK";
+						document.getElementById("text").innerHTML=Q2_J2;
+						document.getElementById("text").style.display="block";
+						x=2;
+					}
+					else if(a1==2){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("text").innerHTML=Q2_J3;
+						document.getElementById("head").innerHTML="JACK";
+						x=100;
+					}
+				}
+				else if(x==3){
+					if(wheel==0){
+						document.getElementById("text").innerHTML=Q2_D2;
+						document.getElementById("head").innerHTML="DERANGED MAN";
+					}
+					
+					else if(wheel==1){
+						document.getElementById("text").innerHTML=Q2_D3;
+						document.getElementById("head").innerHTML="DERANGED MAN";
+						x=4;
+					} 
+				}
+				else if(x==4){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q2_R2;
+						x=100;
+				}
+				else if(x==5){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q2_R3;
+					pickaxe = 1;
+				}
+				else if(x==6){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q2_J4;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					a1=0;
+					z=-1;
+				}
+			}
+			else if(z==3){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q3_J1;
+					document.getElementById("text").style.display="block";
+				}
+				else if(x==1){
+					document.getElementById("head").innerHTML="BLIND MAN";
+					document.getElementById("text").innerHTML=Q3_B1;
+				}
+				else if(x==2){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q3_R1;
+					
+					document.getElementById("a").style.display="block";
+					document.getElementById("b").style.display="block";
+					if(a1==1){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("head").style.display="block";
+						document.getElementById("head").innerHTML="JACK";
+						document.getElementById("text").innerHTML=Q3_J2;
+						document.getElementById("text").style.display="block";
+						x=2;
+					}
+					else if(a1==2){
+						document.getElementById("a").style.display="none";
+						document.getElementById("b").style.display="none";
+						
+						document.getElementById("text").innerHTML=Q3_J3;
+						document.getElementById("head").innerHTML="JACK";
+						x=100;
+					}
+				}
+				else if(x==3){
+					if(stick==0){
+						document.getElementById("text").innerHTML=Q3_B2;
+						document.getElementById("head").innerHTML="BLIND MAN";
+					}
+					else if(stick==1){
+						document.getElementById("text").innerHTML=Q3_B3;
+						document.getElementById("head").innerHTML="BLIND MAN";
+						x=4;
+					} 
+				}
+				else if(x==4){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q3_J4;
+					x=100;
+					z=-1;
+				}
+				else if(x==5){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q3_R2;
+					axe = 1;
+				}
+				else if(x==6){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q3_J5;
+				}
+				else if(x==7){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="BLIND MAN";
+					document.getElementById("text").innerHTML=Q3_B4;
+				}
+				else if(x==8){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").innerHTML=Q3_R3;
+				}
+				else if(x==9){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="JACK";
+					document.getElementById("text").innerHTML=Q3_J6;
+				}
+				else if(x==10){
+					document.getElementById("head").style.display="block";
+					document.getElementById("head").innerHTML="BLIND MAN";
+					document.getElementById("text").innerHTML=Q3_B5;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					a1=0;
+					z=-1;
+				}
+			}
+			/////////2ND AREA/////////
+			else if(z==4){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Jack";
+					document.getElementById("text").innerHTML=A2_J1;
+				}else if(x==1){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="";
+					document.getElementById("text").innerHTML=A2_I1;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+				}
+			}
+			else if(z==5){
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Stranged Woman";
+					document.getElementById("text").innerHTML=A2_S1;
+				}
+				else if(x==1){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Jack";
+					document.getElementById("text").innerHTML=A2_J2;
+				}
+				else if(x==2){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Stranged Woman";
+					document.getElementById("text").innerHTML=A2_S2;
+				}
+				else if(x==3){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R1;
+				}
+				else if(x==4){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Jack";
+					document.getElementById("text").innerHTML=A2_J3;
+				}
+				else if(x==5){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R2;
+					food = 1;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+				}
+			}
+			else if(z==6){
+				
+				if(x==0){
+					document.getElementById("head").style.display="block";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Strange Kid";
+					document.getElementById("text").innerHTML=A2_K1;
+				}else if(x==1){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R3;
+				}
+				else if(x==2){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R4;
+					wheel = 1;
+				}else if(x==3){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_I2;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+				}
+			}
+			else if(z==8){
+				if(x==0){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R5;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+				}
+			}
+			else if(z==9){
+				if(x==0){
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="block";
+					document.getElementById("head").innerHTML="Coal Miner";
+					document.getElementById("text").innerHTML=A2_R6;
+				}
+				else{
+					document.getElementById("head").style.display="none";
+					document.getElementById("text").style.display="none";
+					x=-1;
+					z=-1;
+				}
+			}
+			////////3RD AREA////////
+			else if(z==10){
+				if(pickaxe == 0){
+					if(x==0){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C1;
+					}
+					else if(x==1){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J1;
+					}
+					else{
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="none";
+						x = 100;
+					z=-1;
+					}
+				}
+				else if(pickaxe == 1){
+				    if(x==0){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C2;
+					}
+					else if(x==1){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C3;
+					}
+					else if(x==2){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J2;
+					}
+					else if(x==3){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C4;
+					}
+					else if(x==4){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J3;
+					}
+					else if(x==5){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C5;
+					}
+					else if(x==6){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J4;
+					}
+					else if(x==7){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C6;
+					}
+					else if(x==8){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J5;
+					}
+					else if(x==9){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C7;
+						stick = 1;
+					}
+					else if(x==10){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J6;
+					}
+					else if(x==11){
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="..";
+						document.getElementById("text").innerHTML=A3_R1;
+					}
+					else if(x==12){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C8;
+					}
+					else if(x==13){
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_R2;
+					}
+					else if(x==14){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J7;
+					}
+					else if(x==15){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C9;
+					}
+					else if(x==16){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Coal Miner";
+						document.getElementById("text").innerHTML=A3_C10;
+					}
+					else if(x==17){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="LumberJack";
+						document.getElementById("text").innerHTML=A3_L1;
+					}
+					else if(x==18){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J8;
+					}
+					else if(x==19){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberjack";
+						document.getElementById("text").innerHTML=A3_L2;
+					}
+					else if(x==20){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J9;
+					}
+					else{
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="none";
+						x=-1;
+					z=-1;
+					}
+				}
+			}
+			else if(z==11){
+				if(axe == 0){
+					if(x==0){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberjack";
+						document.getElementById("text").innerHTML=A3_L3;
+					}
+					else if(x==1){
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_R4;
+					}
+					else if(x==2){
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J10;
+					}
+					else{
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="none";
+						x=100;
+					z=-1;
+					}
+				}
+				else if(axe == 1){
+					if(x==0){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberjack";
+						document.getElementById("text").innerHTML=A3_L4;
+					}
+					else if(x==1){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberjack";
+						document.getElementById("text").innerHTML=A3_L5;
+					}
+					else if(x==2){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Jack";
+						document.getElementById("text").innerHTML=A3_J11;
+					}
+					else if(x==3){
+						document.getElementById("head").style.display="block";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberack";
+						document.getElementById("text").innerHTML=A3_L6;
+					}
+					else if(x==4){
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="block";
+						document.getElementById("head").innerHTML="Lumberack";
+						document.getElementById("text").innerHTML=A3_R5;
+					}
+					else{
+						document.getElementById("head").style.display="none";
+						document.getElementById("text").style.display="none";
+						x=-1;
+					z=-1;
+					}
+				}
+			}
+		}		
+	</script>
+</body>
+		
